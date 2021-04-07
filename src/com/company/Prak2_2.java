@@ -52,10 +52,10 @@ public class Prak2_2 {
                 countAvg++;
             }
         }
-        System.out.println(sumAvg/countAvg);
+        System.out.println(sumAvg / countAvg);
 
-        sumAvg=0;
-        countAvg=0;
+        sumAvg = 0;
+        countAvg = 0;
 
         for (int j : array3) {
             if (j != 0) {
@@ -63,6 +63,6 @@ public class Prak2_2 {
                 countAvg++;
             }
         }
-        System.out.println(sumAvg/countAvg);
+        System.out.println(sumAvg / countAvg);
     }
 }
