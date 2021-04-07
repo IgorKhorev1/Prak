@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Prak2_1 {
@@ -30,6 +31,14 @@ public class Prak2_1 {
                 indexMinElement=i;
             }
         }
+
+        /*int min = Arrays.stream(array).min().getAsInt();
+        for (int i = 0; i < array.length; i++) {
+            if(array[i]==min){
+                indexMinElement=i;
+                break;
+            }
+        } */
 
         System.out.println("Минимальный элемент - "+minElement+", индекс - "+indexMinElement);
 
