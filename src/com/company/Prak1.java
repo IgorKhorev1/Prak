@@ -20,6 +20,7 @@ public class Prak1 {
         else {
             System.out.println("Число "+num2+" больше "+num1);
         }
+
         System.out.println(num1+num2);
     }
 }
