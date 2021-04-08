@@ -38,11 +38,9 @@ public class Prak2_3 {
 
         for (int i = 0; i < array3.length; i++) {
             array3[i] = array1[i] + array2[i];
+            System.out.print(array3[i]+" ");
         }
-        System.out.println();
-        for (Integer integer : array3) {
-            System.out.print(integer + " ");
-        }
+
 
     }
 
