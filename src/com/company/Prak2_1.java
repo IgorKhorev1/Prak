@@ -1,5 +1,6 @@
 package com.company;
 
+//не используется
 import java.util.Arrays;
 import java.util.Random;
 
@@ -32,6 +33,8 @@ public class Prak2_1 {
             }
         }
 
+
+        //зачем это в коде?
         /*int min = Arrays.stream(array).min().getAsInt();
         for (int i = 0; i < array.length; i++) {
             if(array[i]==min){
