@@ -13,8 +13,5 @@ public class Practice3 {
 
             System.out.println(String.format("Person №%s - lastName - %s, firstName - %s",i,randomPerson[i].lastName,randomPerson[i].firstName));
         }
-
-
-
     }
 }
