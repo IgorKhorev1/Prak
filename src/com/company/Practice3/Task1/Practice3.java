@@ -1,4 +1,6 @@
-package com.company.Practice3;
+package com.company.Practice3.Task1;
+
+import com.company.Practice3.Task1.Person;
 
 public class Practice3 {
     public static void main(String[] args) {

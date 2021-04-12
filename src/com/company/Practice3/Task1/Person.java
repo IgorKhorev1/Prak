@@ -1,4 +1,4 @@
-package com.company.Practice3;
+package com.company.Practice3.Task1;
 
 public class Person {
     String firstName = new String();
