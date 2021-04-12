@@ -5,7 +5,7 @@ import java.util.Random;
 public class SequentialRandom {
     static Random random = new Random();
     static int randNumberTemp = random.nextInt(100);
-    private int randNumber = randNumberTemp;
+    private int randNumber;
 
     SequentialRandom() {
         randNumber = randNumberTemp++;
