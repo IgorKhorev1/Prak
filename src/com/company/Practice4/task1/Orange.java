@@ -7,7 +7,7 @@ public class Orange extends Fruit {
 
     public Orange(int weight, int peelThickness) {
         super(weight);
-        if (peelThickness > -1 && peelThickness < 21) {
+        if (peelThickness >= 1 && peelThickness < 21) {
             this.peelThickness = peelThickness;
         } else {
             System.out.println("incorrectly peel thickness");
