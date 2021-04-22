@@ -52,7 +52,8 @@ public class Prak2_2 {
                 countAvg++;
             }
         }
-        System.out.println(sumAvg / countAvg);
+        int a = sumAvg/countAvg;
+        System.out.println(a);
 
         sumAvg = 0;
         countAvg = 0;
