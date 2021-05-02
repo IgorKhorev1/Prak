@@ -1,4 +1,4 @@
-package com.company.Practice9;
+package com.company.practice9;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;

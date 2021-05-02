@@ -1,4 +1,4 @@
-package com.company.Practice9;
+package com.company.practice9;
 
 import java.io.File;
 import java.io.FileInputStream;
