@@ -36,8 +36,8 @@ public class Main {
         MyFileVisitor myFileVisitor = new MyFileVisitor();
         Files.walkFileTree(Paths.get("C:\\Users\\Igor Khorev\\Desktop\\SE2021_LESSON9"), myFileVisitor);
         System.out.println("Максимальный и минимальный файлы");
-        System.out.println("Максимальный файл - "+myFileVisitor.getMaxFileName());
-        System.out.println("Размер - "+myFileVisitor.getMaxSize());
+        System.out.println("Максимальный файл - " + myFileVisitor.getMaxFileName());
+        System.out.println("Размер - " + myFileVisitor.getMaxSize());
 
         try (FileInputStream fileInputStream = new FileInputStream(myFileVisitor.maxFileName);) {
             int b;
@@ -53,8 +53,8 @@ public class Main {
         }
         System.out.println();
 
-        System.out.println("Минимальный файл - "+myFileVisitor.getMinFileName());
-        System.out.println("Размер - "+myFileVisitor.getMinSize());
+        System.out.println("Минимальный файл - " + myFileVisitor.getMinFileName());
+        System.out.println("Размер - " + myFileVisitor.getMinSize());
 
         try {
             FileInputStream fileInputStream = new FileInputStream(myFileVisitor.minFileName);
@@ -66,31 +66,20 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e);
         }
-File fileOnDelete = new File("C:\\Users\\Igor Khorev\\Desktop\\SE2021_LESSON9");
 
-//        deleteDirectory(new File("C:\\Users\\Igor Khorev\\Desktop\\SE2021_LESSON9"));
-    boolean result =     deleteDirectory(fileOnDelete);
-        System.out.println(result);    }
+        File fileOnDelete = new File("C:\\Users\\Igor Khorev\\Desktop\\SE2021_LESSON9");
+        deletefile(fileOnDelete);
+    }
 
 
-    /*public static void deleteDirectory(File dir) {
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i=0; i<children.length; i++) {
-                File f = new File(dir, children[i]);
-                deleteDirectory(f);
-            }
-            dir.delete();
-        } else dir.delete();
-    }*/
-     static boolean deleteDirectory(File directoryToBeDeleted) {
-        File[] allContents = directoryToBeDeleted.listFiles();
-        if (allContents != null) {
-            for (File file : allContents) {
-                deleteDirectory(file);
+    public static void deletefile(File path) {
+        if (path.isDirectory()) {
+            for (File f : path.listFiles()) {
+                if (f.isDirectory()) deletefile(f);
+                else f.delete();
             }
         }
-        return directoryToBeDeleted.delete();
+        path.delete();
     }
 
 }
