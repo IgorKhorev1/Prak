@@ -24,7 +24,7 @@ public class Main {
         urls.add(getUrlsString(url1));
         urls.add(getUrlsString(url2));
         urls.add(getUrlsString(url3));
-        System.out.println("Время на последовательную загрузку - " + (System.currentTimeMillis() - start));
+        System.out.println("Времи потребовалось - " + (System.currentTimeMillis() - start));
         System.out.println("Байт потребовалось - " + readOperations);
         readOperations = 0;
         System.out.println("Параллельная загрузка");
