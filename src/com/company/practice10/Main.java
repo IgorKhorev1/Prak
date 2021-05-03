@@ -7,6 +7,9 @@ import java.net.URL;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Main {
+
+    static final Object lock = new Object();
+
     private static int readOperations = 0;
     static String url1 = "https://www.google.com/";
     static String url2 = "https://ya.ru/";
@@ -14,12 +17,9 @@ public class Main {
     static ConcurrentLinkedQueue<String> urls = new ConcurrentLinkedQueue<String>();
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         long start;
-
-
         System.out.println("Последовательная загрузка");
-       // ConcurrentLinkedQueue<String> urls = new ConcurrentLinkedQueue<String>();
         start = System.currentTimeMillis();
         urls.add(getUrlsString(url1));
         urls.add(getUrlsString(url2));
@@ -34,54 +34,60 @@ public class Main {
             public void run() {
                 try {
                     urls.add(getUrlsString(url1));
-                    System.out.println("1 potok zapushen");
+                    synchronized (lock) {
+                        lock.notify();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        URLsThread t1= new URLsThread();
-        URLsThread t2= new URLsThread();
-        URLsThread t3= new URLsThread();
+        Thread second = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    urls.add(getUrlsString(url2));
+                    synchronized (lock) {
+                        lock.notify();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-
-
+        Thread third = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    urls.add(getUrlsString(url3));
+                    synchronized (lock) {
+                        lock.notify();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         start = System.currentTimeMillis();
-        t1.start();
-      //  second.start();
-        // third.start();
+        first.start();
+        synchronized (lock) {
+            lock.wait();
+        }
+        second.start();
+        synchronized (lock){
+            lock.wait();
+        }
+        third.start();
+        synchronized (lock){
+            lock.wait();
+        }
         System.out.println("Времени потребовалось - " + (System.currentTimeMillis() - start));
         System.out.println("Байт потребовалось - " + readOperations);
 
     }
-
-
-
-    static Thread second = new Thread() {
-        @Override
-        public void run() {
-            try {
-                getUrlStringToQueue(url1,urls);
-                ;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-    static Thread third = new Thread() {
-        @Override
-        public void run() {
-            try {
-                getUrlStringToQueue(url1,urls);
-                ;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    };
 
     static public String getUrlsString(String url) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -96,20 +102,5 @@ public class Main {
             }
         }
         return stringBuilder.toString();
-    }
-
-    static public void getUrlStringToQueue(String url, ConcurrentLinkedQueue queue) throws IOException {
-
-        StringBuilder stringBuilder = new StringBuilder();
-        byte[] buffer = new byte[10];
-        try (InputStream inputStream = new URL(url).openStream()) {
-            int read = inputStream.read(buffer);
-            while (read != -1) {
-                stringBuilder.append(new String(buffer));
-                read = inputStream.read(buffer);
-                readOperations++;
-            }
-            queue.add(stringBuilder.toString());
-        }
     }
 }
