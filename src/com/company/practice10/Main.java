@@ -15,6 +15,23 @@ public class Main {
     static String url3 = "https://www.youtube.com/";
     static ConcurrentLinkedQueue<String> urls = new ConcurrentLinkedQueue<String>();
 
+    public Thread createThread (String url){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    urls.add(getUrlsString(url));
+                    synchronized (lock) {
+                        lock.notify();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return thread;
+    }
+
 
     public static void main(String[] args) throws IOException, InterruptedException {
         long start;
@@ -28,47 +45,12 @@ public class Main {
         readOperations = 0;
         System.out.println("Параллельная загрузка");
 
-        Thread first = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    urls.add(getUrlsString(url1));
-                    synchronized (lock) {
-                        lock.notify();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        Main main = new Main();
 
-        Thread second = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    urls.add(getUrlsString(url2));
-                    synchronized (lock) {
-                        lock.notify();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        Thread first = main.createThread(url1);
+        Thread second = main.createThread(url2);
+        Thread third = main.createThread(url3);
 
-        Thread third = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    urls.add(getUrlsString(url3));
-                    synchronized (lock) {
-                        lock.notify();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
         start = System.currentTimeMillis();
         first.start();
